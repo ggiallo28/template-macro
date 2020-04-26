@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SNS Topics for alarms
+Parameters:
+  SupportEmail:
+    Type: String
+    Default: "support+18x7@xpeppers.com"
+  AccountName:
+    Type: String
+    Default: ""
+
+Resources:
+
+  UrgentPriorityAlarm:
+    Type: "AWS::SNS::Topic"
+    Properties: 
+      DisplayName: !Sub ${AccountName}-Urgent-Priority-Alarm
+      Subscription:
+        - Endpoint: !Ref SupportEmail
+          Protocol: email
+      TopicName: !Sub ${AccountName}-Urgent-Priority-Alarm
+
+  HighPriorityAlarm:
+    Type: "AWS::SNS::Topic"
+    Properties: 
+      DisplayName: !Sub ${AccountName}-High-Priority-Alarm
+      Subscription:
+        - Endpoint: !Ref SupportEmail
+          Protocol: email
+      TopicName: !Sub ${AccountName}-High-Priority-Alarm
+
+  MediumPriorityAlarm:
+    Type: "AWS::SNS::Topic"
+    Properties: 
+      DisplayName: !Sub ${AccountName}-Medium-Priority-Alarm
+      Subscription:
+        - Endpoint: !Ref SupportEmail
+          Protocol: email
+      TopicName: !Sub ${AccountName}-Medium-Priority-Alarm
+
+  LowPriorityAlarm:
+    Type: "AWS::SNS::Topic"
+    Properties: 
+      DisplayName: !Sub ${AccountName}-Low-Priority-Alarm
+      Subscription:
+        - Endpoint: !Ref SupportEmail
+          Protocol: email
+      TopicName: !Sub ${AccountName}-Low-Priority-Alarm
+
+Outputs:
+  UrgentPriorityAlarm: 
+    Description: Urgent priority SNS topic ARN 
+    Value: !Ref UrgentPriorityAlarm
+    Export:
+      Name:
+        !Sub "${AWS::StackName}-urgent"
+  HighPriorityAlarm: 
+    Description: High priority SNS topic ARN 
+    Value: !Ref HighPriorityAlarm
+    Export:
+      Name:
+        !Sub "${AWS::StackName}-high"
+  MediumPriorityAlarm: 
+    Description: Medium priority SNS topic ARN 
+    Value: !Ref MediumPriorityAlarm
+    Export:
+      Name:
+        !Sub "${AWS::StackName}-medium"
+  LowPriorityAlarm: 
+    Description: Low priority SNS topic ARN 
+    Value: !Ref LowPriorityAlarm
+    Export:
+      Name:
+        !Sub "${AWS::StackName}-low"
