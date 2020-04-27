@@ -4,47 +4,48 @@ Parameters:
   SupportEmail:
     Type: String
     Default: "support+18x7@xpeppers.com"
-  AccountName:
+  Name:
     Type: String
-    Default: ""
+  Environment:
+    Type: String   
 
 Resources:
 
   UrgentPriorityAlarm:
     Type: "AWS::SNS::Topic"
     Properties: 
-      DisplayName: !Sub ${AccountName}-Urgent-Priority-Alarm
+      DisplayName: !Sub ${Name}-Urgent-Priority-Alarm-${Environment}
       Subscription:
         - Endpoint: !Ref SupportEmail
           Protocol: email
-      TopicName: !Sub ${AccountName}-Urgent-Priority-Alarm
+      TopicName: !Sub ${Name}-Urgent-Priority-Alarm-${Environment}
 
   HighPriorityAlarm:
     Type: "AWS::SNS::Topic"
     Properties: 
-      DisplayName: !Sub ${AccountName}-High-Priority-Alarm
+      DisplayName: !Sub ${Name}-High-Priority-Alarm-${Environment}
       Subscription:
         - Endpoint: !Ref SupportEmail
           Protocol: email
-      TopicName: !Sub ${AccountName}-High-Priority-Alarm
+      TopicName: !Sub ${Name}-High-Priority-Alarm-${Environment}
 
   MediumPriorityAlarm:
     Type: "AWS::SNS::Topic"
     Properties: 
-      DisplayName: !Sub ${AccountName}-Medium-Priority-Alarm
+      DisplayName: !Sub ${Name}-Medium-Priority-Alarm-${Environment}
       Subscription:
         - Endpoint: !Ref SupportEmail
           Protocol: email
-      TopicName: !Sub ${AccountName}-Medium-Priority-Alarm
+      TopicName: !Sub ${Name}-Medium-Priority-Alarm-${Environment}
 
   LowPriorityAlarm:
     Type: "AWS::SNS::Topic"
     Properties: 
-      DisplayName: !Sub ${AccountName}-Low-Priority-Alarm
+      DisplayName: !Sub ${Name}-Low-Priority-Alarm-${Environment}
       Subscription:
         - Endpoint: !Ref SupportEmail
           Protocol: email
-      TopicName: !Sub ${AccountName}-Low-Priority-Alarm
+      TopicName: !Sub ${Name}-Low-Priority-Alarm-${Environment}
 
 Outputs:
   UrgentPriorityAlarm: 
@@ -52,22 +53,22 @@ Outputs:
     Value: !Ref UrgentPriorityAlarm
     Export:
       Name:
-        !Sub "${AWS::StackName}-urgent"
+        !Sub "${AWS::StackName}-urgent-${Environment}"
   HighPriorityAlarm: 
     Description: High priority SNS topic ARN 
     Value: !Ref HighPriorityAlarm
     Export:
       Name:
-        !Sub "${AWS::StackName}-high"
+        !Sub "${AWS::StackName}-high-${Environment}"
   MediumPriorityAlarm: 
     Description: Medium priority SNS topic ARN 
     Value: !Ref MediumPriorityAlarm
     Export:
       Name:
-        !Sub "${AWS::StackName}-medium"
+        !Sub "${AWS::StackName}-medium-${Environment}"
   LowPriorityAlarm: 
     Description: Low priority SNS topic ARN 
     Value: !Ref LowPriorityAlarm
     Export:
       Name:
-        !Sub "${AWS::StackName}-low"
+        !Sub "${AWS::StackName}-low-${Environment}"
